@@ -16,30 +16,22 @@ plugins:
     - about
     - stream-maps
 
-    # TODO: Declare settings and their types here:
     settings:
-    - name: username
-      label: Username
-      description: The username to use for authentication
-
-    - name: password
-      kind: password
-      label: Password
-      description: The password to use for authentication
+    - name: api_key
+      label: API key
+      description: Iterable API key
       sensitive: true
-
     - name: start_date
       kind: date_iso8601
-      label: Start Date
-      description: Initial date to start extracting data from
+      label: Start date
+      description: Timestamp in ISO 8601 format to get data from (inclusive)
+    - name: end_date
+      kind: date_iso8601
+      label: End date
+      description: Timestamp in ISO 8601 format to get data up to (inclusive)
 
-    # TODO: Declare required settings here:
     settings_group_validation:
-    - [username, password]
-
-    # TODO: Declare default configuration values here:
-    config:
-      start_date: '2010-01-01T00:00:00Z'
+    - [api_key]
 
   loaders:
   - name: target-jsonl
