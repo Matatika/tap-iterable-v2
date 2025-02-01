@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import decimal
 import typing as t
+from functools import cached_property
 from importlib import resources
 
 from singer_sdk.authenticators import APIKeyAuthenticator
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.pagination import BaseAPIPaginator  # noqa: TC002
 from singer_sdk.streams import RESTStream
+from typing_extensions import override
 
 if t.TYPE_CHECKING:
     import requests
@@ -29,11 +31,13 @@ class IterableStream(RESTStream):
     # Update this value if necessary or override `get_new_paginator`.
     next_page_token_jsonpath = "$.next_page"  # noqa: S105
 
-    @property
-    def url_base(self) -> str:
-        """Return the API URL root, configurable via tap settings."""
-        # TODO: hardcode a value here, or retrieve it from self.config
-        return "https://api.mysample.com"
+    @override
+    @cached_property
+    def url_base(self):
+        if self.config["region"] == "EU":
+            return "https://api.eu.iterable.com/api"
+
+        return "https://api.iterable.com/api"
 
     @property
     def authenticator(self) -> APIKeyAuthenticator:

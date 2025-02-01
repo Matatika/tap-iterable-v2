@@ -24,6 +24,14 @@ class TapIterable(Tap):
             description="Iterable API key",
         ),
         th.Property(
+            "region",
+            th.StringType,
+            allowed_values=("US", "EU"),
+            default="US",
+            title="Region",
+            description="Iterable region",
+        ),
+        th.Property(
             "start_date",
             th.DateTimeType,
             description="Timestamp in ISO 8601 format to get data from (inclusive)",
