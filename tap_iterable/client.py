@@ -39,17 +39,13 @@ class IterableStream(RESTStream):
 
         return "https://api.iterable.com/api"
 
+    @override
     @property
-    def authenticator(self) -> APIKeyAuthenticator:
-        """Return a new authenticator object.
-
-        Returns:
-            An authenticator instance.
-        """
+    def authenticator(self):
         return APIKeyAuthenticator.create_for_stream(
             self,
-            key="x-api-key",
-            value=self.config.get("auth_token", ""),
+            key="Api-Key",
+            value=self.config["api_key"],
             location="header",
         )
 
